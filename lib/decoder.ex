@@ -87,6 +87,12 @@ defmodule Jason.Decoder do
     end
   end
 
+  defp float_decode_function(%{floats: :strings}) do
+    fn string, _token, _skip ->
+      string
+    end
+  end
+
   defp value(data, original, skip, stack, key_decode, string_decode, float_decode) do
     bytecase data do
       _ in '\s\n\t\r', rest ->

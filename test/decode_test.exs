@@ -122,6 +122,18 @@ defmodule Jason.DecodeTest do
              Decimal.new("123456789.123456789e123")
   end
 
+  test "parsing floats to strings" do
+    assert parse!("0.1", floats: :strings) == "0.1"
+    assert parse!("-0.1", floats: :strings) == "-0.1"
+    assert parse!("1.0e0", floats: :strings) == "1.0e0"
+    assert parse!("1.0e+0", floats: :strings) == "1.0e+0"
+    assert parse!("0.1e1", floats: :strings) == "0.1e1"
+    assert parse!("0.1e-1", floats: :strings) == "0.1e-1"
+
+    assert parse!("123456789.123456789e123", floats: :strings) ==
+             "123456789.123456789e123"
+  end
+
   test "arrays" do
     assert_fail_with "[", "unexpected end of input at position 1"
     assert_fail_with "[,", "unexpected byte at position 1: 0x2C (',')"
